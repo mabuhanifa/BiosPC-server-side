@@ -22,9 +22,30 @@ async function run() {
       .db("manufacturer_website")
       .collection("products");
 
+
+      app.post('/login', async (req, res) => {
+        const user = req.body;
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+            expiresIn: '1d'
+        });
+        res.send({ accessToken });
+    })
+
     app.get("/products", async (req, res) => {
-      const products = await productsCollection.find({}).toArray();
-      res.send(products);
+      const query = {};
+      const cursor = productsCollection.find(query);
+      const users = await cursor.toArray();
+      res.send(users);
+    });
+
+
+     //geting user/items api using id dynamyclicly
+
+    app.get('/products/:id', async(req, res) =>{
+        const id = req.params.id;
+        const query = {_id: ObjectId(id)};
+        const result = await productsCollection.findOne(query);
+        res.send(result);
     });
 
     //adding and posting user/items api
