@@ -18,9 +18,10 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const productsCollection = client
-      .db("manufacturer_website")
-      .collection("products");
+    const productsCollection = client.db("manufacturer_website").collection("products");
+    const reviewsCollection = client.db("manufacturer_website").collection("reviews");
+    const usersCollection = client.db("manufacturer_website").collection("users");
+    const soldCollection = client.db("manufacturer_website").collection("sold");
 
 
       app.post('/login', async (req, res) => {
@@ -29,7 +30,7 @@ async function run() {
             expiresIn: '1d'
         });
         res.send({ accessToken });
-    })
+    });
 
     app.get("/products", async (req, res) => {
       const query = {};
@@ -66,6 +67,20 @@ async function run() {
       const result = await productsCollection.deleteOne(query);
       res.send(result);
     });
+
+    //adding and posting sold items api
+
+    app.post("/sold", async (req, res) => {
+      const sold = req.body;
+      console.log("adding new Item", sold);
+      const result = await soldCollection.insertOne(sold);
+      res.send(result);
+    });
+
+
+
+
+
   } catch (e) {
     console.error(e);
   } finally {
