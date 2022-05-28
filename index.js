@@ -24,7 +24,7 @@ async function run() {
     const soldCollection = client.db("manufacturer_website").collection("sold");
 
 
-      app.post('/login', async (req, res) => {
+    app.post('/login', async (req, res) => {
         const user = req.body;
         const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: '1d'
@@ -32,6 +32,7 @@ async function run() {
         res.send({ accessToken });
     });
 
+    //geting all products on api call
     app.get("/products", async (req, res) => {
       const query = {};
       const cursor = productsCollection.find(query);
@@ -89,9 +90,9 @@ async function run() {
 }
 run().catch(console.dir);
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Running CRUD server!");
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
 });
