@@ -77,10 +77,7 @@ async function run() {
       const result = await soldCollection.insertOne(sold);
       res.send(result);
     });
-
-
-
-
+    
 
   } catch (e) {
     console.error(e);
