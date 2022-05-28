@@ -50,7 +50,7 @@ async function run() {
         res.send(result);
     });
 
-    //adding and posting user/items api
+    //adding and posting products api
 
     app.post("/products", async (req, res) => {
       const newProducts = req.body;
@@ -69,6 +69,13 @@ async function run() {
       res.send(result);
     });
 
+    // geting all sold item on api call
+    app.get("/sold", async (req, res) => {
+      const query = {};
+      const cursor = soldCollection.find(query);
+      const sold= await cursor.toArray();
+      res.send(sold);
+    });
     //adding and posting sold items api
 
     app.post("/sold", async (req, res) => {
@@ -78,12 +85,25 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/sold", async (req, res) => {
+
+    //geting users api  
+
+    app.get("/users", async (req, res) => {
       const query = {};
-      const cursor = soldCollection.find(query);
-      const sold= await cursor.toArray();
-      res.send(sold);
+      const cursor = usersCollection.find(query);
+      const users= await cursor.toArray();
+      res.send(users);
     });
+
+    //adding and posting products api
+
+    app.post("/users", async (req, res) => {
+      const newUser = req.body;
+      console.log("adding new Item", newUser);
+      const result = await usersCollection.insertOne(newProducts);
+      res.send(result);
+    });
+
 
 
   } catch (e) {
