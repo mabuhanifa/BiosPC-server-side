@@ -76,11 +76,12 @@ async function run() {
       const sold= await cursor.toArray();
       res.send(sold);
     });
+    
     //adding and posting sold items api
 
     app.post("/sold", async (req, res) => {
       const sold = req.body;
-      console.log("adding new Item", sold);
+      console.log("adding new sold", sold);
       const result = await soldCollection.insertOne(sold);
       res.send(result);
     });
@@ -104,14 +105,24 @@ async function run() {
       res.send(users);
     });
 
-    //adding and posting products api
+        //geting all reviews on api call
+        app.get("/reviews", async (req, res) => {
+          const query = {};
+          const cursor = reviewsCollection.find(query);
+          const reviews = await cursor.toArray();
+          res.send(reviews);
+        });
 
-    app.post("/users", async (req, res) => {
-      const newUser = req.body;
-      console.log("adding new Item", newUser);
-      const result = await usersCollection.insertOne(newUser);
-      res.send(result);
-    });
+        //adding and review  api
+    
+        app.post("/reviews", async (req, res) => {
+          const newreview = req.body;
+          console.log("adding new review", newreview);
+          const result = await reviewsCollection.insertOne(newreview);
+          res.send(result);
+        });
+    
+
 
 
 
