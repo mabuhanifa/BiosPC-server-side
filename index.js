@@ -85,6 +85,15 @@ async function run() {
       res.send(result);
     });
 
+    //geting sold api  
+
+    app.get("/sold", async (req, res) => {
+      const query = {};
+      const cursor = soldCollection.find(query);
+      const sold= await cursor.toArray();
+      res.send(sold);
+    });
+
 
     //geting users api  
 
