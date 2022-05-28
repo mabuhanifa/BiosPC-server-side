@@ -36,8 +36,8 @@ async function run() {
     app.get("/products", async (req, res) => {
       const query = {};
       const cursor = productsCollection.find(query);
-      const users = await cursor.toArray();
-      res.send(users);
+      const products = await cursor.toArray();
+      res.send(products);
     });
 
 
@@ -77,7 +77,14 @@ async function run() {
       const result = await soldCollection.insertOne(sold);
       res.send(result);
     });
-    
+
+    app.get("/sold", async (req, res) => {
+      const query = {};
+      const cursor = soldCollection.find(query);
+      const sold= await cursor.toArray();
+      res.send(sold);
+    });
+
 
   } catch (e) {
     console.error(e);
