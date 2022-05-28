@@ -33,6 +33,7 @@ async function run() {
     });
 
     //geting all products on api call
+
     app.get("/products", async (req, res) => {
       const query = {};
       const cursor = productsCollection.find(query);
@@ -41,7 +42,7 @@ async function run() {
     });
 
 
-     //geting user/items api using id dynamyclicly
+     //geting products api using id dynamyclicly
 
     app.get('/products/:id', async(req, res) =>{
         const id = req.params.id;
@@ -59,7 +60,7 @@ async function run() {
       res.send(result);
     });
 
-    //  deleting user/items api
+    //  deleting products by id api
 
     app.delete("/products/:id", async (req, res) => {
       const id = req.params.id;
@@ -70,6 +71,7 @@ async function run() {
     });
 
     // geting all sold item on api call
+    
     app.get("/sold", async (req, res) => {
       const query = {};
       const cursor = soldCollection.find(query);
